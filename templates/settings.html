@@ -1,0 +1,249 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - TAK Server LDAP Admin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-cog"></i> System Settings
+            <small class="text-muted">Configuration & Administration</small>
+        </h1>
+    </div>
+</div>
+
+<div class="row">
+    <!-- LDAP Configuration -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-server"></i> LDAP Configuration
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Server:</strong></td>
+                        <td><code>{{ ldap_config.server }}</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Base DN:</strong></td>
+                        <td><code>{{ ldap_config.base_dn }}</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Users OU:</strong></td>
+                        <td><code>{{ ldap_config.users_ou }}</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Groups OU:</strong></td>
+                        <td><code>{{ ldap_config.groups_ou }}</code></td>
+                    </tr>
+                </table>
+                
+                <div class="mt-3">
+                    <button class="btn btn-primary" onclick="testConnection()">
+                        <i class="fas fa-plug"></i> Test Connection
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- System Information -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle"></i> System Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Application:</strong></td>
+                        <td>TAK LDAP Admin v1.0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Framework:</strong></td>
+                        <td>Flask + Bootstrap 5</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Security:</strong></td>
+                        <td>
+                            <span class="badge bg-success">HTTPS</span>
+                            <span class="badge bg-success">CSRF</span>
+                            <span class="badge bg-success">Rate Limiting</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status:</strong></td>
+                        <td><span class="badge bg-success">Online</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Admin Tools -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-tools"></i> Administrative Tools
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <i class="fas fa-download fa-2x text-primary mb-2"></i>
+                                <h6>Export Users</h6>
+                                <button class="btn btn-outline-primary btn-sm" onclick="exportUsers()">
+                                    Export CSV
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <i class="fas fa-file-alt fa-2x text-info mb-2"></i>
+                                <h6>View Logs</h6>
+                                <button class="btn btn-outline-info btn-sm" onclick="viewLogs()">
+                                    Show Logs
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <i class="fas fa-sync-alt fa-2x text-warning mb-2"></i>
+                                <h6>Sync LDAP</h6>
+                                <button class="btn btn-outline-warning btn-sm" onclick="syncLdap()">
+                                    Force Sync
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- User Management -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-users-cog"></i> Admin User Management
+                </h5>
+            </div>
+            <div class="card-body">
+                <p class="text-muted">Current admin users for this interface:</p>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Permissions</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>admin</strong></td>
+                                <td><span class="badge bg-danger">Super Admin</span></td>
+                                <td>Full Access</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>operator</strong></td>
+                                <td><span class="badge bg-warning">Operator</span></td>
+                                <td>Read/Write Users</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+                            <tr>
+                                <td><strong>viewer</strong></td>
+                                <td><span class="badge bg-info">Viewer</span></td>
+                                <td>Read Only</td>
+                                <td><span class="badge bg-success">Active</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle"></i>
+                    <strong>Note:</strong> Admin users are currently configured in the application code. 
+                    For production use, consider moving to database-based authentication.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function testConnection() {
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Testing...';
+    btn.disabled = true;
+    
+    fetch('/api/test-connection')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showAlert('LDAP connection test successful!', 'success');
+            } else {
+                showAlert('LDAP connection test failed: ' + data.message, 'danger');
+            }
+        })
+        .catch(error => {
+            showAlert('Connection test error: ' + error.message, 'danger');
+        })
+        .finally(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+}
+
+function exportUsers() {
+    showAlert('Export functionality coming soon!', 'info');
+}
+
+function viewLogs() {
+    showAlert('Log viewer coming soon!', 'info');
+}
+
+function syncLdap() {
+    if (confirm('Are you sure you want to force an LDAP sync?')) {
+        showAlert('LDAP sync functionality coming soon!', 'info');
+    }
+}
+
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.querySelector('main.container').insertBefore(alertDiv, document.querySelector('main.container').firstChild);
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+</script>
+{% endblock %}

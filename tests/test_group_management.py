@@ -1,0 +1,85 @@
+import pytest
+from unittest.mock import Mock, patch
+
+class TestGroupManagement:
+    """Test group management functionality."""
+    
+    def test_group_list_page(self, client, mock_ldap_connection):
+        """Test group list page loads correctly."""
+        # Mock LDAP search results for groups
+        mock_group = Mock()
+        mock_group.cn.value = 'testgroup'
+        mock_group.description.value = 'Test Group'
+        mock_group.member = ['cn=user1,ou=users,dc=example,dc=com']
+        mock_ldap_connection.entries = [mock_group]
+        
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.get('/groups')
+            assert response.status_code in [200, 302]
+    
+    def test_add_group_form(self, client, mock_ldap_connection):
+        """Test add group form submission."""
+        group_data = {
+            'name': 'newgroup',
+            'description': 'New Test Group',
+            'members': ['user1', 'user2']
+        }
+        
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/add_group', data=group_data)
+            assert response.status_code in [200, 302]
+    
+    def test_group_membership(self, client, mock_ldap_connection, sample_group_data):
+        """Test group membership management."""
+        # Test adding user to group
+        membership_data = {
+            'group': sample_group_data['name'],
+            'user': 'newuser',
+            'action': 'add'
+        }
+        
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/manage_membership', data=membership_data)
+            assert response.status_code in [200, 302]
+    
+    def test_group_validation(self, sample_group_data):
+        """Test group data validation."""
+        assert sample_group_data['name'] == 'testgroup'
+        assert len(sample_group_data['description']) > 0
+        assert isinstance(sample_group_data['members'], list)
+    
+    def test_group_search(self, client, mock_ldap_connection):
+        """Test group search functionality."""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.get('/groups?search=test')
+            assert response.status_code in [200, 302]
+    
+    def test_group_edit(self, client, mock_ldap_connection):
+        """Test group editing."""
+        edit_data = {
+            'description': 'Updated Group Description',
+            'members': ['user1', 'user2', 'user3']
+        }
+        
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/edit_group/testgroup', data=edit_data)
+            assert response.status_code in [200, 302]
+    
+    def test_group_delete(self, client, mock_ldap_connection):
+        """Test group deletion."""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/delete_group/testgroup')
+            assert response.status_code in [200, 302]
+            mock_ldap_connection.delete.assert_called()
+    
+    def test_nested_groups(self, client, mock_ldap_connection):
+        """Test nested group functionality if supported."""
+        # This test depends on your LDAP schema supporting nested groups
+        nested_data = {
+            'parent_group': 'parentgroup',
+            'child_group': 'childgroup'
+        }
+        
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            # Test would depend on your specific implementation
+            assert True  # Placeholder

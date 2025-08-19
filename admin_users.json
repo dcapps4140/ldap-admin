@@ -1,0 +1,23 @@
+{
+  "admin": {
+    "password_hash": "$2b$12$ROb6TNMmsEf8GI4s/rlegOcRv0hhgF1CmFCB34qQzG8R0fNgqTZ06",
+    "role": "super_admin",
+    "created": "2025-08-19T14:42:54.670255Z",
+    "last_login": null,
+    "active": true
+  },
+  "operator": {
+    "password_hash": "$2b$12$mrD.91Oj5Bkf1CmzEZ3c9uFkNnZvfmxxfY6czwkayBTDX5bzW5zCW",
+    "role": "operator",
+    "created": "2025-08-19T14:42:54.670284Z",
+    "last_login": null,
+    "active": true
+  },
+  "viewer": {
+    "password_hash": "$2b$12$.pVfcQ8oj1t5DBi/xIRJcOlTxDSqjt4nIWQkAm6DAfC2j.Agw8L3m",
+    "role": "viewer",
+    "created": "2025-08-19T14:42:54.670286Z",
+    "last_login": null,
+    "active": true
+  }
+}

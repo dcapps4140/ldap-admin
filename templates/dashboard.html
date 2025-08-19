@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - TAK Server LDAP Admin{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+            <small class="text-muted">System Overview</small>
+        </h1>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.users }}</h4>
+                        <p class="card-text">Total Users</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-users fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ stats.groups }}</h4>
+                        <p class="card-text">Total Groups</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-layer-group fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card {% if stats.status == 'connected' %}bg-success{% elif stats.status == 'error' %}bg-danger{% else %}bg-warning{% endif %} text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">
+                            {% if stats.status == 'connected' %}
+                                <i class="fas fa-check-circle"></i> Online
+                            {% elif stats.status == 'error' %}
+                                <i class="fas fa-exclamation-triangle"></i> Error
+                            {% else %}
+                                <i class="fas fa-question-circle"></i> Unknown
+                            {% endif %}
+                        </h4>
+                        <p class="card-text">LDAP Status</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="fas fa-server fa-2x"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-bolt"></i> Quick Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% if current_user.can_write() %}
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('users') }}" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-user-plus"></i><br>
+                            Add User
+                        </a>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('users') }}" class="btn btn-outline-info w-100">
+                            <i class="fas fa-list"></i><br>
+                            View Users
+                        </a>
+                    </div>
+                    
+                    {% if current_user.can_manage_groups() %}
+                    <div class="col-md-3 mb-3">
+                        <a href="{{ url_for('groups') }}" class="btn btn-outline-success w-100">
+                            <i class="fas fa-users-cog"></i><br>
+                            Manage Groups
+                        </a>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="col-md-3 mb-3">
+                        <button class="btn btn-outline-secondary w-100" onclick="testConnection()">
+                            <i class="fas fa-plug"></i><br>
+                            Test Connection
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- System Information -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-info-circle"></i> System Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <table class="table table-sm">
+                    <tr>
+                        <td><strong>Your Role:</strong></td>
+                        <td>
+                            <span class="badge bg-{% if current_user.role == 'super_admin' %}danger{% elif current_user.role == 'operator' %}warning{% else %}info{% endif %}">
+                                {{ current_user.role.replace('_', ' ').title() }}
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Permissions:</strong></td>
+                        <td>
+                            {% if current_user.can_write() %}
+                                <span class="badge bg-success">Write</span>
+                            {% endif %}
+                            {% if current_user.can_delete() %}
+                                <span class="badge bg-danger">Delete</span>
+                            {% endif %}
+                            {% if current_user.can_manage_groups() %}
+                                <span class="badge bg-warning">Groups</span>
+                            {% endif %}
+                            <span class="badge bg-info">Read</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Last Login:</strong></td>
+                        <td id="lastLogin">Just now</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="fas fa-chart-line"></i> Recent Activity
+                </h5>
+            </div>
+            <div class="card-body">
+                <div id="recentActivity">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+function testConnection() {
+    const btn = event.target;
+    const originalText = btn.innerHTML;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i><br>Testing...';
+    btn.disabled = true;
+    
+    fetch('/api/test-connection')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showAlert('Connection test successful!', 'success');
+            } else {
+                showAlert('Connection test failed: ' + data.message, 'danger');
+            }
+        })
+        .catch(error => {
+            showAlert('Connection test failed: ' + error.message, 'danger');
+        })
+        .finally(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        });
+}
+
+function showAlert(message, type) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+    alertDiv.innerHTML = `
+        ${message}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    document.querySelector('.container.mt-3').appendChild(alertDiv);
+    
+    setTimeout(() => {
+        alertDiv.remove();
+    }, 5000);
+}
+
+// Load recent activity (placeholder)
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        document.getElementById('recentActivity').innerHTML = `
+            <div class="list-group list-group-flush">
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <small>Dashboard accessed</small>
+                    <small class="text-muted">Just now</small>
+                </div>
+                <div class="list-group-item d-flex justify-content-between align-items-center">
+                    <small>User logged in</small>
+                    <small class="text-muted">Just now</small>
+                </div>
+            </div>
+        `;
+    }, 1000);
+});
+</script>
+{% endblock %}

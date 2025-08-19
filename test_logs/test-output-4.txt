@@ -1,0 +1,46 @@
+# Test run 4 - Tue Aug 19 18:53:05 UTC 2025
+# Command: python tests/discover_routes.py
+
+/home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_limiter/extension.py:336: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+  warnings.warn(
+Available routes in the application:
+===================================
+Route: /static/<path:filename> - Methods: GET, OPTIONS, HEAD
+Route: /login - Methods: GET, OPTIONS, HEAD, POST
+Route: /logout - Methods: GET, OPTIONS, HEAD
+Route: / - Methods: GET, OPTIONS, HEAD
+Route: /users - Methods: GET, OPTIONS, HEAD
+Route: /groups - Methods: GET, OPTIONS, HEAD
+Route: /settings - Methods: GET, OPTIONS, HEAD
+Route: /api/users - Methods: GET, OPTIONS, HEAD
+Route: /api/users - Methods: OPTIONS, POST
+Route: /api/users/<username> - Methods: OPTIONS, DELETE
+Route: /api/groups - Methods: GET, OPTIONS, HEAD
+Route: /api/test-connection - Methods: GET, OPTIONS, HEAD
+Route: /api/stats - Methods: GET, OPTIONS, HEAD
+
+Suggested test endpoints:
+=======================
+
+User Management Routes:
+  /users - GET, OPTIONS, HEAD
+  /api/users - GET, OPTIONS, HEAD
+  /api/users - OPTIONS, POST
+  /api/users/<username> - OPTIONS, DELETE
+
+Group Management Routes:
+  /groups - GET, OPTIONS, HEAD
+  /api/groups - GET, OPTIONS, HEAD
+
+Authentication Routes:
+  /login - GET, OPTIONS, HEAD, POST
+  /logout - GET, OPTIONS, HEAD
+
+Other Routes:
+  /static/<path:filename> - GET, OPTIONS, HEAD
+  / - GET, OPTIONS, HEAD
+  /settings - GET, OPTIONS, HEAD
+  /api/test-connection - GET, OPTIONS, HEAD
+  /api/stats - GET, OPTIONS, HEAD
+
+# End of test run 4 - Tue Aug 19 18:53:06 UTC 2025

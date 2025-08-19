@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Groups - TAK LDAP Admin{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Group Management</h3>
+                </div>
+                <div class="card-body">
+                    <div id="groups-table">
+                        <p>Loading groups...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Load groups when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadGroups();
+});
+
+function loadGroups() {
+    fetch('/api/groups')
+        .then(response => response.json())
+        .then(data => {
+            // The API returns the groups array directly, not wrapped in a success object
+            if (Array.isArray(data)) {
+                displayGroups(data);
+            } else if (data.error) {
+                document.getElementById('groups-table').innerHTML = '<div class="alert alert-danger">Error: ' + data.error + '</div>';
+            } else {
+                document.getElementById('groups-table').innerHTML = '<div class="alert alert-danger">Error: Unexpected response format</div>';
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('groups-table').innerHTML = '<div class="alert alert-danger">Error: Failed to retrieve groups</div>';
+        });
+}
+
+function displayGroups(groups) {
+    let html = '<table class="table table-striped"><thead><tr><th>Group Name</th><th>Description</th><th>Members</th><th>Actions</th></tr></thead><tbody>';
+    
+    groups.forEach(group => {
+        html += `<tr>
+            <td>${group.name || group.cn || 'N/A'}</td>
+            <td>${group.description || 'No description'}</td>
+            <td>${group.member_count || 0}</td>
+            <td><button class="btn btn-sm btn-primary">Edit</button></td>
+        </tr>`;
+    });
+    
+    html += '</tbody></table>';
+    document.getElementById('groups-table').innerHTML = html;
+}
+</script>
+{% endblock %}

@@ -1,0 +1,55 @@
+# Test run 15 - Tue Aug 19 18:57:46 UTC 2025
+# Command: pytest tests/test_authentication_rate_limits.py -v
+
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.4.1, pluggy-1.6.0 -- /home/dcapps/projects/ldap-admin/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/dcapps/projects/ldap-admin
+plugins: cov-6.2.1, mock-3.14.1, flask-1.3.0
+collecting ... collected 2 items
+
+tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled ERROR [ 50%]
+tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_enabled ERROR [100%]
+
+==================================== ERRORS ====================================
+_ ERROR at setup of TestAuthenticationWithRateLimits.test_login_with_rate_limits_disabled _
+file /home/dcapps/projects/ldap-admin/tests/test_authentication_rate_limits.py, line 7
+      def test_login_with_rate_limits_disabled(self, client, mock_ldap_connection, disable_rate_limits):
+E       fixture 'disable_rate_limits' not found
+>       available fixtures: _configure_application, _monkeypatch_response_class, _push_request_context, accept_any, accept_json, accept_jsonp, accept_mimetype, app, authenticated_client, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, class_mocker, client, client_class, config, cov, doctest_namespace, live_server, mock_ldap_connection, mocker, module_mocker, monkeypatch, no_cover, package_mocker, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, sample_group_data, sample_user_data, session_mocker, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/dcapps/projects/ldap-admin/tests/test_authentication_rate_limits.py:7
+_ ERROR at setup of TestAuthenticationWithRateLimits.test_login_with_rate_limits_enabled _
+file /home/dcapps/projects/ldap-admin/tests/test_authentication_rate_limits.py, line 21
+      def test_login_with_rate_limits_enabled(self, client, mock_ldap_connection, with_rate_limits):
+E       fixture 'with_rate_limits' not found
+>       available fixtures: _configure_application, _monkeypatch_response_class, _push_request_context, accept_any, accept_json, accept_jsonp, accept_mimetype, app, authenticated_client, cache, capfd, capfdbinary, caplog, capsys, capsysbinary, capteesys, class_mocker, client, client_class, config, cov, doctest_namespace, live_server, mock_ldap_connection, mocker, module_mocker, monkeypatch, no_cover, package_mocker, pytestconfig, record_property, record_testsuite_property, record_xml_attribute, recwarn, sample_group_data, sample_user_data, session_mocker, tmp_path, tmp_path_factory, tmpdir, tmpdir_factory
+>       use 'pytest --fixtures [testpath]' for help on them.
+
+/home/dcapps/projects/ldap-admin/tests/test_authentication_rate_limits.py:21
+=============================== warnings summary ===============================
+tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
+tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_wtf/recaptcha/widgets.py:2: DeprecationWarning: 'flask.Markup' is deprecated and will be removed in Flask 2.4. Import 'markupsafe.Markup' instead.
+    from flask import Markup
+
+tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: tagMap is deprecated. Please use TAG_MAP instead.
+    warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+
+tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: typeMap is deprecated. Please use TYPE_MAP instead.
+    warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+
+tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_limiter/extension.py:336: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+ERROR tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
+ERROR tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_enabled
+======================== 5 warnings, 2 errors in 1.00s =========================
+
+# End of test run 15 - Tue Aug 19 18:57:48 UTC 2025

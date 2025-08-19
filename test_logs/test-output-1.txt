@@ -1,0 +1,38 @@
+# Test run 1 - Tue Aug 19 18:51:33 UTC 2025
+# Command: pytest tests/test_basic.py -v
+
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.4.1, pluggy-1.6.0 -- /home/dcapps/projects/ldap-admin/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/dcapps/projects/ldap-admin
+plugins: cov-6.2.1, mock-3.14.1, flask-1.3.0
+collecting ... collected 5 items
+
+tests/test_basic.py::test_basic_functionality PASSED                     [ 20%]
+tests/test_basic.py::test_app_creation PASSED                            [ 40%]
+tests/test_basic.py::test_client_creation PASSED                         [ 60%]
+tests/test_basic.py::test_sample_data PASSED                             [ 80%]
+tests/test_basic.py::test_mock_ldap PASSED                               [100%]
+
+=============================== warnings summary ===============================
+tests/test_basic.py::test_app_creation
+tests/test_basic.py::test_app_creation
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_wtf/recaptcha/widgets.py:2: DeprecationWarning: 'flask.Markup' is deprecated and will be removed in Flask 2.4. Import 'markupsafe.Markup' instead.
+    from flask import Markup
+
+tests/test_basic.py::test_app_creation
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: tagMap is deprecated. Please use TAG_MAP instead.
+    warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+
+tests/test_basic.py::test_app_creation
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: typeMap is deprecated. Please use TYPE_MAP instead.
+    warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+
+tests/test_basic.py::test_app_creation
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_limiter/extension.py:336: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 5 passed, 5 warnings in 0.99s =========================
+
+# End of test run 1 - Tue Aug 19 18:51:34 UTC 2025

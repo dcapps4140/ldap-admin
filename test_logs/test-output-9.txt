@@ -1,0 +1,46 @@
+# Test run 9 - Tue Aug 19 18:53:40 UTC 2025
+# Command: pytest tests/test_authentication_auto.py tests/test_group_management_auto.py tests/test_other_routes_auto.py tests/test_user_management_auto.py -v
+
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.4.1, pluggy-1.6.0 -- /home/dcapps/projects/ldap-admin/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /home/dcapps/projects/ldap-admin
+plugins: cov-6.2.1, mock-3.14.1, flask-1.3.0
+collecting ... collected 13 items
+
+tests/test_authentication_auto.py::TestAuthentication::test_get__login PASSED [  7%]
+tests/test_authentication_auto.py::TestAuthentication::test_post__login PASSED [ 15%]
+tests/test_authentication_auto.py::TestAuthentication::test_get__logout PASSED [ 23%]
+tests/test_group_management_auto.py::TestGroupManagement::test_get__groups PASSED [ 30%]
+tests/test_group_management_auto.py::TestGroupManagement::test_get__api_groups PASSED [ 38%]
+tests/test_other_routes_auto.py::TestOtherRoutes::test_get__ PASSED      [ 46%]
+tests/test_other_routes_auto.py::TestOtherRoutes::test_get__settings PASSED [ 53%]
+tests/test_other_routes_auto.py::TestOtherRoutes::test_get__api_test_connection PASSED [ 61%]
+tests/test_other_routes_auto.py::TestOtherRoutes::test_get__api_stats PASSED [ 69%]
+tests/test_user_management_auto.py::TestUserManagement::test_get__users PASSED [ 76%]
+tests/test_user_management_auto.py::TestUserManagement::test_get__api_users PASSED [ 84%]
+tests/test_user_management_auto.py::TestUserManagement::test_post__api_users PASSED [ 92%]
+tests/test_user_management_auto.py::TestUserManagement::test_delete__api_users__username_ PASSED [100%]
+
+=============================== warnings summary ===============================
+tests/test_authentication_auto.py::TestAuthentication::test_get__login
+tests/test_authentication_auto.py::TestAuthentication::test_get__login
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_wtf/recaptcha/widgets.py:2: DeprecationWarning: 'flask.Markup' is deprecated and will be removed in Flask 2.4. Import 'markupsafe.Markup' instead.
+    from flask import Markup
+
+tests/test_authentication_auto.py::TestAuthentication::test_get__login
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: tagMap is deprecated. Please use TAG_MAP instead.
+    warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+
+tests/test_authentication_auto.py::TestAuthentication::test_get__login
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: typeMap is deprecated. Please use TYPE_MAP instead.
+    warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+
+tests/test_authentication_auto.py::TestAuthentication::test_get__login
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_limiter/extension.py:336: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+======================== 13 passed, 5 warnings in 1.05s ========================
+
+# End of test run 9 - Tue Aug 19 18:53:41 UTC 2025

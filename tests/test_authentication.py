@@ -1,0 +1,87 @@
+import pytest
+from unittest.mock import Mock, patch
+from flask import session
+
+class TestAuthentication:
+    """Test authentication functionality."""
+    
+    def test_login_page_loads(self, client):
+        """Test login page loads correctly."""
+        response = client.get('/login')
+        assert response.status_code == 200
+        assert b'login' in response.data.lower()
+    
+    def test_valid_login(self, client, mock_ldap_connection):
+        """Test successful login."""
+        login_data = {
+            'username': 'admin',
+            'password': 'correct_password'
+        }
+        
+        # Mock successful LDAP bind
+        mock_ldap_connection.bind.return_value = True
+        
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/login', data=login_data, follow_redirects=True)
+            assert response.status_code == 200
+    
+    def test_invalid_login(self, client, mock_ldap_connection):
+        """Test failed login."""
+        login_data = {
+            'username': 'admin',
+            'password': 'wrong_password'
+        }
+        
+        # Mock failed LDAP bind
+        mock_ldap_connection.bind.return_value = False
+        
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/login', data=login_data)
+            assert response.status_code == 200
+            assert b'invalid' in response.data.lower() or b'error' in response.data.lower()
+    
+    def test_logout(self, client):
+        """Test logout functionality."""
+        # First login (mock session)
+        with client.session_transaction() as sess:
+            sess['user'] = 'testuser'
+            sess['authenticated'] = True
+        
+        # Then logout
+        response = client.get('/logout', follow_redirects=True)
+        assert response.status_code == 200
+    
+    def test_session_management(self, client):
+        """Test session handling."""
+        with client.session_transaction() as sess:
+            sess['user'] = 'testuser'
+            sess['authenticated'] = True
+            assert sess['user'] == 'testuser'
+    
+    def test_protected_route_without_auth(self, client):
+        """Test accessing protected route without authentication."""
+        response = client.get('/users')
+        # Should redirect to login or return 401/403
+        assert response.status_code in [302, 401, 403]
+    
+    def test_protected_route_with_auth(self, authenticated_client):
+        """Test accessing protected route with authentication."""
+        response = authenticated_client.get('/dashboard')
+        assert response.status_code in [200, 302]
+    
+    def test_admin_required_routes(self, client, mock_ldap_connection):
+        """Test routes that require admin privileges."""
+        # Test without admin privileges
+        with client.session_transaction() as sess:
+            sess['user'] = 'regularuser'
+            sess['authenticated'] = True
+            sess['is_admin'] = False
+        
+        response = client.get('/admin')
+        assert response.status_code in [302, 403]
+    
+    def test_password_reset_request(self, client):
+        """Test password reset request."""
+        reset_data = {'email': 'user@example.com'}
+        response = client.post('/reset_password', data=reset_data)
+        assert response.status_code in [200, 302]

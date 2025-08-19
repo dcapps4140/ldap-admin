@@ -1,0 +1,55 @@
+# Test run 11 - Tue Aug 19 18:56:23 UTC 2025
+# Command: python show_routes.py
+
+/home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_limiter/extension.py:336: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+  warnings.warn(
+
+All Routes in the Application:
+=============================
+Endpoint: api_add_user              Route: /api/users                     Methods: POST
+Endpoint: api_delete_user           Route: /api/users/<username>          Methods: DELETE
+Endpoint: api_get_groups            Route: /api/groups                    Methods: GET
+Endpoint: api_get_stats             Route: /api/stats                     Methods: GET
+Endpoint: api_get_users             Route: /api/users                     Methods: GET
+Endpoint: api_test_connection       Route: /api/test-connection           Methods: GET
+Endpoint: dashboard                 Route: /                              Methods: GET
+Endpoint: groups                    Route: /groups                        Methods: GET
+Endpoint: login                     Route: /login                         Methods: GET, POST
+Endpoint: logout                    Route: /logout                        Methods: GET
+Endpoint: settings                  Route: /settings                      Methods: GET
+Endpoint: static                    Route: /static/<path:filename>        Methods: GET
+Endpoint: users                     Route: /users                         Methods: GET
+
+Routes by Category:
+=================
+
+User Management:
+  /api/users                     Methods: POST
+  /api/users/<username>          Methods: DELETE
+  /api/users                     Methods: GET
+  /users                         Methods: GET
+
+Group Management:
+  /api/groups                    Methods: GET
+  /groups                        Methods: GET
+
+Authentication:
+  /login                         Methods: GET, POST
+  /logout                        Methods: GET
+
+API:
+  /api/users                     Methods: POST
+  /api/users/<username>          Methods: DELETE
+  /api/groups                    Methods: GET
+  /api/stats                     Methods: GET
+  /api/users                     Methods: GET
+  /api/test-connection           Methods: GET
+
+Static:
+  /static/<path:filename>        Methods: GET
+
+Other:
+  /                              Methods: GET
+  /settings                      Methods: GET
+
+# End of test run 11 - Tue Aug 19 18:56:24 UTC 2025
