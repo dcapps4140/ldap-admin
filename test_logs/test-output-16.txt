@@ -1,0 +1,511 @@
+# Test run 16 - Tue Aug 19 19:40:59 UTC 2025
+# Command: pytest tests/ --cov=app --cov-report=html
+
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.4.1, pluggy-1.6.0
+rootdir: /home/dcapps/projects/ldap-admin
+plugins: cov-6.2.1, mock-3.14.1, flask-1.3.0
+collected 71 items
+
+tests/test_api_routes.py FFFFFF                                          [  8%]
+tests/test_api_routes_with_auth.py ...                                   [ 12%]
+tests/test_authentication.py ......FFF                                   [ 25%]
+tests/test_authentication_auto.py .F.                                    [ 29%]
+tests/test_authentication_rate_limits.py F.                              [ 32%]
+tests/test_authentication_updated.py FFFF..sss                           [ 45%]
+tests/test_basic.py ......                                               [ 53%]
+tests/test_group_management.py .FF..FF.                                  [ 64%]
+tests/test_group_management_auto.py ..                                   [ 67%]
+tests/test_other_routes_auto.py ....                                     [ 73%]
+tests/test_page_routes.py .F.....                                        [ 83%]
+tests/test_rate_limiting.py .                                            [ 84%]
+tests/test_user_management.py .F...FF                                    [ 94%]
+tests/test_user_management_auto.py ....                                  [100%]
+
+=================================== FAILURES ===================================
+_______________________ TestApiRoutes.test_api_users_get _______________________
+
+self = <tests.test_api_routes.TestApiRoutes object at 0x7f547afb6f20>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000802525232'>
+
+    def test_api_users_get(self, client, mock_ldap_connection):
+        """Test GET /api/users endpoint."""
+        # Mock user data
+        mock_user = Mock()
+        mock_user.cn.value = 'testuser'
+        mock_user.mail.value = 'test@example.com'
+        mock_user.givenName.value = 'Test'
+        mock_user.sn.value = 'User'
+        mock_ldap_connection.entries = [mock_user]
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.get('/api/users')
+>           assert response.status_code in [200, 401, 403]
+E           assert 302 in [200, 401, 403]
+E            +  where 302 = <WrapperTestResponse streamed [302 FOUND]>.status_code
+
+tests/test_api_routes.py:20: AssertionError
+______________________ TestApiRoutes.test_api_users_post _______________________
+
+self = <tests.test_api_routes.TestApiRoutes object at 0x7f547afb7130>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000802831856'>
+
+    def test_api_users_post(self, client, mock_ldap_connection):
+        """Test POST /api/users endpoint."""
+        user_data = {
+            'username': 'newuser',
+            'email': 'newuser@example.com',
+            'first_name': 'New',
+            'last_name': 'User',
+            'password': 'SecurePass123!'
+        }
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/api/users',
+                                  data=json.dumps(user_data),
+                                  content_type='application/json')
+>           assert response.status_code in [201, 400, 401, 403, 409]
+E           assert 302 in [201, 400, 401, 403, 409]
+E            +  where 302 = <WrapperTestResponse streamed [302 FOUND]>.status_code
+
+tests/test_api_routes.py:41: AssertionError
+_____________________ TestApiRoutes.test_api_users_delete ______________________
+
+self = <tests.test_api_routes.TestApiRoutes object at 0x7f547afb73a0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000802821632'>
+
+    def test_api_users_delete(self, client, mock_ldap_connection):
+        """Test DELETE /api/users/<username> endpoint."""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.delete('/api/users/testuser')
+>           assert response.status_code in [200, 401, 403, 404]
+E           assert 302 in [200, 401, 403, 404]
+E            +  where 302 = <WrapperTestResponse streamed [302 FOUND]>.status_code
+
+tests/test_api_routes.py:47: AssertionError
+______________________ TestApiRoutes.test_api_groups_get _______________________
+
+self = <tests.test_api_routes.TestApiRoutes object at 0x7f547afb6d40>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000802814032'>
+
+    def test_api_groups_get(self, client, mock_ldap_connection):
+        """Test GET /api/groups endpoint."""
+        # Mock group data
+        mock_group = Mock()
+        mock_group.cn.value = 'testgroup'
+        mock_group.description.value = 'Test Group'
+        mock_ldap_connection.entries = [mock_group]
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.get('/api/groups')
+>           assert response.status_code in [200, 401, 403]
+E           assert 302 in [200, 401, 403]
+E            +  where 302 = <WrapperTestResponse streamed [302 FOUND]>.status_code
+
+tests/test_api_routes.py:59: AssertionError
+_________________________ TestApiRoutes.test_api_stats _________________________
+
+self = <tests.test_api_routes.TestApiRoutes object at 0x7f547afb76d0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000792661056'>
+
+    def test_api_stats(self, client, mock_ldap_connection):
+        """Test GET /api/stats endpoint."""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.get('/api/stats')
+>           assert response.status_code in [200, 401, 403]
+E           assert 302 in [200, 401, 403]
+E            +  where 302 = <WrapperTestResponse streamed [302 FOUND]>.status_code
+
+tests/test_api_routes.py:70: AssertionError
+____________________ TestApiRoutes.test_api_test_connection ____________________
+
+self = <tests.test_api_routes.TestApiRoutes object at 0x7f547afb7940>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000792733792'>
+
+    def test_api_test_connection(self, client, mock_ldap_connection):
+        """Test GET /api/test_connection endpoint."""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.get('/api/test_connection')
+>           assert response.status_code in [200, 401, 403]
+E           assert 404 in [200, 401, 403]
+E            +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_api_routes.py:81: AssertionError
+______________ TestAuthentication.test_protected_route_with_auth _______________
+
+self = <tests.test_authentication.TestAuthentication object at 0x7f547aab0880>
+authenticated_client = <FlaskClient <Flask 'app'>>
+
+    def test_protected_route_with_auth(self, authenticated_client):
+        """Test accessing protected route with authentication."""
+        response = authenticated_client.get('/dashboard')
+>       assert response.status_code in [200, 302]
+E       assert 404 in [200, 302]
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_authentication.py:70: AssertionError
+________________ TestAuthentication.test_admin_required_routes _________________
+
+self = <tests.test_authentication.TestAuthentication object at 0x7f547aab0af0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000793258128'>
+
+    def test_admin_required_routes(self, client, mock_ldap_connection):
+        """Test routes that require admin privileges."""
+        # Test without admin privileges
+        with client.session_transaction() as sess:
+            sess['user'] = 'regularuser'
+            sess['authenticated'] = True
+            sess['is_admin'] = False
+    
+        response = client.get('/admin')
+>       assert response.status_code in [302, 403]
+E       assert 404 in [302, 403]
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_authentication.py:81: AssertionError
+________________ TestAuthentication.test_password_reset_request ________________
+
+self = <tests.test_authentication.TestAuthentication object at 0x7f547aab0d30>
+client = <FlaskClient <Flask 'app'>>
+
+    def test_password_reset_request(self, client):
+        """Test password reset request."""
+        reset_data = {'email': 'user@example.com'}
+        response = client.post('/reset_password', data=reset_data)
+>       assert response.status_code in [200, 302]
+E       assert 404 in [200, 302]
+E        +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_authentication.py:87: AssertionError
+_____________________ TestAuthentication.test_post__login ______________________
+
+self = <tests.test_authentication_auto.TestAuthentication object at 0x7f547aab13f0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000793282208'>
+
+    def test_post__login(self, client, mock_ldap_connection):
+        """Test POST /login"""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            # Login data
+            data = {
+                'username': 'testuser',
+                'password': 'password'
+            }
+            response = client.post('/login', data=data)
+>           assert response.status_code in [200, 302]  # Success or redirect
+E           assert 429 in [200, 302]
+E            +  where 429 = <WrapperTestResponse streamed [429 TOO MANY REQUESTS]>.status_code
+
+tests/test_authentication_auto.py:23: AssertionError
+____ TestAuthenticationWithRateLimits.test_login_with_rate_limits_disabled _____
+
+self = <tests.test_authentication_rate_limits.TestAuthenticationWithRateLimits object at 0x7f547aab1ab0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000792890528'>
+disable_rate_limits = None
+
+    def test_login_with_rate_limits_disabled(self, client, mock_ldap_connection, disable_rate_limits):
+        """Test login with rate limits disabled."""
+        login_data = {
+            'username': 'admin',
+            'password': 'correct_password'
+        }
+    
+        # Mock successful LDAP bind
+        mock_ldap_connection.bind.return_value = True
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/login', data=login_data)
+>           assert response.status_code in [200, 302]  # Success or redirect
+E           assert 429 in [200, 302]
+E            +  where 429 = <WrapperTestResponse streamed [429 TOO MANY REQUESTS]>.status_code
+
+tests/test_authentication_rate_limits.py:19: AssertionError
+_______________ TestAuthenticationUpdated.test_login_page_loads ________________
+
+self = <tests.test_authentication_updated.TestAuthenticationUpdated object at 0x7f547aab2320>
+client = <FlaskClient <Flask 'app'>>
+
+    def test_login_page_loads(self, client):
+        """Test login page loads correctly."""
+        response = client.get('/login')
+>       assert response.status_code == 200
+E       assert 429 == 200
+E        +  where 429 = <WrapperTestResponse streamed [429 TOO MANY REQUESTS]>.status_code
+
+tests/test_authentication_updated.py:11: AssertionError
+__________________ TestAuthenticationUpdated.test_valid_login __________________
+
+self = <tests.test_authentication_updated.TestAuthenticationUpdated object at 0x7f547aab34f0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000792738400'>
+
+    def test_valid_login(self, client, mock_ldap_connection):
+        """Test successful login."""
+        login_data = {
+            'username': 'admin',
+            'password': 'correct_password'
+        }
+    
+        # Mock successful LDAP bind
+        mock_ldap_connection.bind.return_value = True
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/login', data=login_data, follow_redirects=True)
+>           assert response.status_code == 200
+E           assert 429 == 200
+E            +  where 429 = <WrapperTestResponse streamed [429 TOO MANY REQUESTS]>.status_code
+
+tests/test_authentication_updated.py:26: AssertionError
+_________________ TestAuthenticationUpdated.test_invalid_login _________________
+
+self = <tests.test_authentication_updated.TestAuthenticationUpdated object at 0x7f547aab37f0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000793025440'>
+
+    def test_invalid_login(self, client, mock_ldap_connection):
+        """Test failed login."""
+        login_data = {
+            'username': 'admin',
+            'password': 'wrong_password'
+        }
+    
+        # Mock failed LDAP bind
+        mock_ldap_connection.bind.return_value = False
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/login', data=login_data)
+>           assert response.status_code == 200
+E           assert 429 == 200
+E            +  where 429 = <WrapperTestResponse streamed [429 TOO MANY REQUESTS]>.status_code
+
+tests/test_authentication_updated.py:40: AssertionError
+____________________ TestAuthenticationUpdated.test_logout _____________________
+
+self = <tests.test_authentication_updated.TestAuthenticationUpdated object at 0x7f547aab3310>
+client = <FlaskClient <Flask 'app'>>
+
+    def test_logout(self, client):
+        """Test logout functionality."""
+        # First login (mock session)
+        with client.session_transaction() as sess:
+            sess['user'] = 'testuser'
+            sess['authenticated'] = True
+    
+        # Then logout
+        response = client.get('/logout', follow_redirects=True)
+>       assert response.status_code == 200
+E       assert 429 == 200
+E        +  where 429 = <WrapperTestResponse streamed [429 TOO MANY REQUESTS]>.status_code
+
+tests/test_authentication_updated.py:52: AssertionError
+___________________ TestGroupManagement.test_add_group_form ____________________
+
+self = <tests.test_group_management.TestGroupManagement object at 0x7f547aab2a40>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000793374352'>
+
+    def test_add_group_form(self, client, mock_ldap_connection):
+        """Test add group form submission."""
+        group_data = {
+            'name': 'newgroup',
+            'description': 'New Test Group',
+            'members': ['user1', 'user2']
+        }
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/add_group', data=group_data)
+>           assert response.status_code in [200, 302]
+E           assert 404 in [200, 302]
+E            +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_group_management.py:30: AssertionError
+__________________ TestGroupManagement.test_group_membership ___________________
+
+self = <tests.test_group_management.TestGroupManagement object at 0x7f547aab22f0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000793028464'>
+sample_group_data = {'description': 'Test Group Description', 'members': ['testuser1', 'testuser2'], 'name': 'testgroup'}
+
+    def test_group_membership(self, client, mock_ldap_connection, sample_group_data):
+        """Test group membership management."""
+        # Test adding user to group
+        membership_data = {
+            'group': sample_group_data['name'],
+            'user': 'newuser',
+            'action': 'add'
+        }
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/manage_membership', data=membership_data)
+>           assert response.status_code in [200, 302]
+E           assert 404 in [200, 302]
+E            +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_group_management.py:43: AssertionError
+_____________________ TestGroupManagement.test_group_edit ______________________
+
+self = <tests.test_group_management.TestGroupManagement object at 0x7f547aac12a0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000793343072'>
+
+    def test_group_edit(self, client, mock_ldap_connection):
+        """Test group editing."""
+        edit_data = {
+            'description': 'Updated Group Description',
+            'members': ['user1', 'user2', 'user3']
+        }
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/edit_group/testgroup', data=edit_data)
+>           assert response.status_code in [200, 302]
+E           assert 404 in [200, 302]
+E            +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_group_management.py:66: AssertionError
+____________________ TestGroupManagement.test_group_delete _____________________
+
+self = <tests.test_group_management.TestGroupManagement object at 0x7f547aac13c0>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000792894944'>
+
+    def test_group_delete(self, client, mock_ldap_connection):
+        """Test group deletion."""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/delete_group/testgroup')
+>           assert response.status_code in [200, 302]
+E           assert 404 in [200, 302]
+E            +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_group_management.py:72: AssertionError
+________________________ TestPageRoutes.test_login_page ________________________
+
+self = <tests.test_page_routes.TestPageRoutes object at 0x7f547aac5360>
+client = <FlaskClient <Flask 'app'>>
+
+    def test_login_page(self, client):
+        """Test login page."""
+        response = client.get('/login')
+>       assert response.status_code == 200
+E       assert 429 == 200
+E        +  where 429 = <WrapperTestResponse streamed [429 TOO MANY REQUESTS]>.status_code
+
+tests/test_page_routes.py:15: AssertionError
+____________________ TestUserManagement.test_add_user_form _____________________
+
+self = <tests.test_user_management.TestUserManagement object at 0x7f547aac6620>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000793434848'>
+
+    def test_add_user_form(self, client, mock_ldap_connection):
+        """Test add user form submission."""
+        user_data = {
+            'username': 'newuser',
+            'email': 'newuser@example.com',
+            'first_name': 'New',
+            'last_name': 'User',
+            'password': 'SecurePass123!',
+            'confirm_password': 'SecurePass123!'
+        }
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/add_user', data=user_data, follow_redirects=True)
+            # Should either succeed or redirect to login
+>           assert response.status_code == 200
+E           assert 404 == 200
+E            +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_user_management.py:36: AssertionError
+______________________ TestUserManagement.test_user_edit _______________________
+
+self = <tests.test_user_management.TestUserManagement object at 0x7f547aac6b30>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000802817408'>
+
+    def test_user_edit(self, client, mock_ldap_connection):
+        """Test user editing."""
+        edit_data = {
+            'email': 'updated@example.com',
+            'first_name': 'Updated',
+            'last_name': 'User'
+        }
+    
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/edit_user/testuser', data=edit_data)
+>           assert response.status_code in [200, 302]
+E           assert 404 in [200, 302]
+E            +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_user_management.py:74: AssertionError
+_____________________ TestUserManagement.test_user_delete ______________________
+
+self = <tests.test_user_management.TestUserManagement object at 0x7f547aac6f80>
+client = <FlaskClient <Flask 'app'>>
+mock_ldap_connection = <Mock name='Connection()' id='140000802828448'>
+
+    def test_user_delete(self, client, mock_ldap_connection):
+        """Test user deletion."""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = client.post('/delete_user/testuser')
+>           assert response.status_code in [200, 302]
+E           assert 404 in [200, 302]
+E            +  where 404 = <WrapperTestResponse streamed [404 NOT FOUND]>.status_code
+
+tests/test_user_management.py:80: AssertionError
+=============================== warnings summary ===============================
+tests/test_api_routes.py::TestApiRoutes::test_api_users_get
+tests/test_api_routes.py::TestApiRoutes::test_api_users_get
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_wtf/recaptcha/widgets.py:2: DeprecationWarning: 'flask.Markup' is deprecated and will be removed in Flask 2.4. Import 'markupsafe.Markup' instead.
+    from flask import Markup
+
+tests/test_api_routes.py::TestApiRoutes::test_api_users_get
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: tagMap is deprecated. Please use TAG_MAP instead.
+    warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+
+tests/test_api_routes.py::TestApiRoutes::test_api_users_get
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: typeMap is deprecated. Please use TYPE_MAP instead.
+    warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+
+tests/test_api_routes.py::TestApiRoutes::test_api_users_get
+  /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_limiter/extension.py:336: UserWarning: Using the in-memory storage for tracking rate limits as no storage was explicitly specified. This is not recommended for production use. See: https://flask-limiter.readthedocs.io#configuring-a-storage-backend for documentation about configuring the storage backend.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.10.12-final-0 _______________
+
+Coverage HTML written to dir htmlcov
+=========================== short test summary info ============================
+FAILED tests/test_api_routes.py::TestApiRoutes::test_api_users_get - assert 3...
+FAILED tests/test_api_routes.py::TestApiRoutes::test_api_users_post - assert ...
+FAILED tests/test_api_routes.py::TestApiRoutes::test_api_users_delete - asser...
+FAILED tests/test_api_routes.py::TestApiRoutes::test_api_groups_get - assert ...
+FAILED tests/test_api_routes.py::TestApiRoutes::test_api_stats - assert 302 i...
+FAILED tests/test_api_routes.py::TestApiRoutes::test_api_test_connection - as...
+FAILED tests/test_authentication.py::TestAuthentication::test_protected_route_with_auth
+FAILED tests/test_authentication.py::TestAuthentication::test_admin_required_routes
+FAILED tests/test_authentication.py::TestAuthentication::test_password_reset_request
+FAILED tests/test_authentication_auto.py::TestAuthentication::test_post__login
+FAILED tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
+FAILED tests/test_authentication_updated.py::TestAuthenticationUpdated::test_login_page_loads
+FAILED tests/test_authentication_updated.py::TestAuthenticationUpdated::test_valid_login
+FAILED tests/test_authentication_updated.py::TestAuthenticationUpdated::test_invalid_login
+FAILED tests/test_authentication_updated.py::TestAuthenticationUpdated::test_logout
+FAILED tests/test_group_management.py::TestGroupManagement::test_add_group_form
+FAILED tests/test_group_management.py::TestGroupManagement::test_group_membership
+FAILED tests/test_group_management.py::TestGroupManagement::test_group_edit
+FAILED tests/test_group_management.py::TestGroupManagement::test_group_delete
+FAILED tests/test_page_routes.py::TestPageRoutes::test_login_page - assert 42...
+FAILED tests/test_user_management.py::TestUserManagement::test_add_user_form
+FAILED tests/test_user_management.py::TestUserManagement::test_user_edit - as...
+FAILED tests/test_user_management.py::TestUserManagement::test_user_delete - ...
+============= 23 failed, 45 passed, 3 skipped, 5 warnings in 2.26s =============
+
+# End of test run 16 - Tue Aug 19 19:41:02 UTC 2025
