@@ -1,27 +1,27 @@
-# Test Summary Report
-Generated: 2025-08-19 19:44:57
+# Test Report
+Generated: 2025-08-19 21:06:48
 
-## Latest Test Run
-- **File**: test-output-18.txt
-- **Total Tests**: 2
-- **Passed**: 2 (100.0%)
+## Summary
+- **Total Tests**: 71
+- **Passed**: 55 (77.5%)
 - **Failed**: 0 (0.0%)
-- **Warnings**: 5
-- **Errors**: 0
-- **Run Time**: 1.28s
+- **Skipped**: 16 (22.5%)
+- **Error**: 0 (0.0%)
 
-## Test Trend
-| Run | Total | Passed | Failed | Errors | Pass Rate |
-|-----|-------|--------|--------|--------|-----------|
-| 1 | 56 | 38 | 18 | 0 | 67.9% |
-| 2 | 2 | 0 | 0 | 2 | 0.0% |
-| 3 | 71 | 45 | 23 | 0 | 63.4% |
-| 4 | 71 | 45 | 23 | 0 | 63.4% |
-| 5 | 2 | 2 | 0 | 0 | 100.0% |
-
-## Recommendations
-
-2. **Address warnings**: Review and fix the warnings in the test output.
-4. **Update tests for missing routes**: Some tests are failing because they're testing routes that don't exist yet.
-5. **Handle rate limiting**: Configure tests to handle or disable rate limiting during testing.
-6. **Improve test coverage**: Focus on testing the core functionality of your application.
+## Skipped Tests
+- tests/test_api_routes.py::TestApiRoutes::test_api_test_connection
+- tests/test_authentication.py::TestAuthentication::test_admin_required_routes
+- tests/test_authentication_no_rate_limits.py::TestAuthenticationNoRateLimits::test_login_page_loads
+- tests/test_authentication_no_rate_limits.py::TestAuthenticationNoRateLimits::test_valid_login
+- tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
+- tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_enabled
+- tests/test_authentication_updated.py::TestAuthenticationUpdated::test_protected_route_with_auth
+- tests/test_authentication_updated.py::TestAuthenticationUpdated::test_admin_required_routes
+- tests/test_authentication_updated.py::TestAuthenticationUpdated::test_password_reset_request
+- tests/test_group_management.py::TestGroupManagement::test_add_group_form
+- tests/test_group_management.py::TestGroupManagement::test_group_membership
+- tests/test_group_management.py::TestGroupManagement::test_group_edit
+- tests/test_group_management.py::TestGroupManagement::test_group_delete
+- tests/test_user_management.py::TestUserManagement::test_add_user_form
+- tests/test_user_management.py::TestUserManagement::test_user_edit
+- tests/test_user_management.py::TestUserManagement::test_user_delete

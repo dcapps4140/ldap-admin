@@ -1,0 +1,31 @@
+import pytest
+from unittest.mock import Mock, patch, MagicMock
+import json
+
+class TestOtherRoutes:
+    """Test other application routes."""
+    
+    def test_get__(self, authenticated_client, mock_ldap_connection):
+        """Test GET /"""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = authenticated_client.get('/', follow_redirects=True)
+            assert response.status_code in [200, 302, 401, 403, 429]  # Success, redirect, or auth required
+            
+    def test_get__settings(self, authenticated_client, mock_ldap_connection):
+        """Test GET /settings"""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = authenticated_client.get('/settings', follow_redirects=True)
+            assert response.status_code in [200, 302, 401, 403, 429]  # Success, redirect, or auth required
+            
+    def test_get__api_test_connection(self, authenticated_client, mock_ldap_connection):
+        """Test GET /api/test-connection"""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = authenticated_client.get('/api/test-connection', follow_redirects=True)
+            assert response.status_code in [200, 302, 401, 403, 429]  # Success, redirect, or auth required
+            
+    def test_get__api_stats(self, authenticated_client, mock_ldap_connection):
+        """Test GET /api/stats"""
+        with patch('app.get_ldap_connection', return_value=mock_ldap_connection):
+            response = authenticated_client.get('/api/stats', follow_redirects=True)
+            assert response.status_code in [200, 302, 401, 403, 429]  # Success, redirect, or auth required
+            

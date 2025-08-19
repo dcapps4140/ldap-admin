@@ -1,56 +1,22 @@
 import pytest
 import sys
 import os
-import tempfile
 from unittest.mock import Mock, patch, MagicMock
 
 # Add the project root to the Python path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, project_root)
 
+# Import the test app factory
+from tests.test_app_factory import create_test_app
+
 @pytest.fixture
 def app():
     """Create and configure a test Flask app."""
     try:
-        # Create a temporary log file for testing
-        temp_log = tempfile.NamedTemporaryFile(delete=False, suffix='.log')
-        temp_log.close()
-        
-        # Patch the logging configuration before importing
-        with patch('logging.FileHandler') as mock_handler:
-            # Create a mock file handler that doesn't require permissions
-            mock_handler.return_value = Mock()
-            
-            # Import the main app
-            import app as flask_app_module
-            
-            # Get the Flask app instance
-            if hasattr(flask_app_module, 'app'):
-                flask_app = flask_app_module.app
-            elif hasattr(flask_app_module, 'create_app'):
-                flask_app = flask_app_module.create_app()
-            else:
-                # Look for Flask app instance
-                for attr_name in dir(flask_app_module):
-                    attr = getattr(flask_app_module, attr_name)
-                    if hasattr(attr, 'config') and hasattr(attr, 'test_client'):
-                        flask_app = attr
-                        break
-                else:
-                    raise ImportError("Could not find Flask app instance")
-        
-        # Configure for testing
-        flask_app.config.update({
-            'TESTING': True,
-            'SECRET_KEY': 'test-secret-key',
-            'WTF_CSRF_ENABLED': False,  # Disable CSRF for testing
-            'LOG_FILE': temp_log.name,
-        })
-        
-        return flask_app
-        
+        return create_test_app()
     except Exception as e:
-        pytest.skip(f"Could not import Flask app: {e}")
+        pytest.skip(f"Could not create test app: {e}")
 
 @pytest.fixture
 def client(app):
@@ -101,28 +67,13 @@ def authenticated_client(client, app):
         sess['user'] = 'testadmin'
         sess['authenticated'] = True
         sess['is_admin'] = True
-    return client
+    
+    # Make a request to ensure the session is saved
+    client.get('/')
+    
+    yield client
 
 @pytest.fixture
-def disable_rate_limits(app):
-    """Disable rate limits for testing."""
-    original_enabled = app.config.get('RATELIMIT_ENABLED', True)
-    app.config['RATELIMIT_ENABLED'] = False
-    yield
-    app.config['RATELIMIT_ENABLED'] = original_enabled
-
-@pytest.fixture
-def with_rate_limits(app):
-    """Ensure rate limits are enabled for testing."""
-    original_enabled = app.config.get('RATELIMIT_ENABLED', True)
-    app.config['RATELIMIT_ENABLED'] = True
-    yield
-    app.config['RATELIMIT_ENABLED'] = original_enabled
-
-@pytest.fixture
-def disable_rate_limits(app):
-    """Disable rate limits for testing."""
-    original_enabled = app.config.get('RATELIMIT_ENABLED', True)
-    app.config['RATELIMIT_ENABLED'] = False
-    yield
-    app.config['RATELIMIT_ENABLED'] = original_enabled
+def authenticated_client_no_rate_limits(authenticated_client):
+    """Create an authenticated client with rate limits disabled."""
+    yield authenticated_client

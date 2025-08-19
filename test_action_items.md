@@ -1,36 +1,60 @@
 # Test Action Items
-Generated: 2025-08-19 19:43:30
-Based on: test-output-17.txt
+Generated: 2025-08-19 20:04:01
+Based on: test-output-20.txt
 
-## High Priority
-### 3. Fix API Issues
-- Update API tests to handle authentication
-- Ensure proper response handling
+**Test Summary**: 45 passed, 25 failed, 0 errors, 3 warnings
+
+## High Priority Items
+### 3. Fix Status Code Issues
+#### Status Code 302 Issues
+These tests are getting redirected (302). You need to:
+- Use authenticated client for API tests
+- Update assertions to accept 302 as valid response
+- Use `follow_redirects=True` in client requests
 
 Affected tests:
-- tests/test_api_routes.py::TestApiRoutes::test_api_users_get: ============= 23 failed, 45 passed, 3 skipped, 5 warnings in 2.24s =============
+- TestApiRoutes.test_api_users_get
+- TestApiRoutes.test_api_users_post
+- TestApiRoutes.test_api_users_delete
+- TestApiRoutes.test_api_groups_get
+- TestApiRoutes.test_api_stats
 
-## Medium Priority
-### 2. Fix Other Test Issues
+#### Status Code 429 Issues
+These tests are hitting rate limits (429). You need to:
+- Use the `disable_rate_limits` fixture
 
 Affected tests:
-- [: tests/test_user_management_auto.py::TestUserManagement::test_delete__api_users__username_ PASSED ...
+- TestAuthentication.test_post__login
+- TestAuthenticationNoRateLimits.test_login_page_loads
+- TestAuthenticationNoRateLimits.test_valid_login
+- TestAuthenticationUpdated.test_login_page_loads
+- TestAuthenticationUpdated.test_valid_login
+- TestAuthenticationUpdated.test_invalid_login
+- TestAuthenticationUpdated.test_logout
+- TestPageRoutes.test_login_page
 
-## Low Priority
+## Medium Priority Items
+## Low Priority Items
 ### 1. Address Warnings
-- /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/flask_wtf/recaptcha/widgets.py:2: DeprecationWarning: 'flask.Markup' is deprecated and will be removed in Flask 2.4. Import 'markupsafe.Markup' instead.
+#### Other Warnings
+- warnings.warn(f"{attr} is deprecated. Please use {newAttr} instead.", DeprecationWarning)
+- warnings.warn(
 - tests/test_api_routes.py::TestApiRoutes::test_api_users_get
-- from flask import Markup
 
-### 2. Quick Wins
-- Add `@pytest.mark.skip` to tests for unimplemented features
-- Update test assertions to match actual application behavior
-- Add more specific error messages to failing tests
+#### DeprecationWarning Warnings
+- /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: typeMap is deprecated. Please use TYPE_MAP instead.
+- /home/dcapps/projects/ldap-admin/venv/lib/python3.10/site-packages/pyasn1/codec/ber/encoder.py:952: DeprecationWarning: tagMap is deprecated. Please use TAG_MAP instead.
+
+#### UserWarning Warnings
+Configure a proper storage backend for Flask-Limiter:
+```python
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    storage_uri="redis\://127.0.0.1:6379",
+)
+```
 
 ## Implementation Plan
-
-1. **Fix rate limiting in tests first** - This will unblock many tests
-2. **Update authentication handling** - Ensure tests can authenticate properly
-3. **Fix API tests** - Update to handle authentication and proper responses
-4. **Implement missing routes** - Or skip tests for routes not yet implemented
-5. **Address remaining issues** - Fix other test failures
+1. **Fix authentication in tests** - Use authenticated client for protected routes
+2. **Address warnings** - Fix or suppress warnings

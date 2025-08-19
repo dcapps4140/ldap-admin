@@ -1,38 +1,77 @@
 # Enhanced Test Summary Report
-Generated: 2025-08-19 19:09:33
+Generated: 2025-08-19 19:53:27
 
 ## Latest Test Run
-- **File**: test-output-15.txt
-- **Total Tests**: 2
-- **Passed**: 0 (0.0%)
-- **Failed**: 0 (0.0%)
-- **Warnings**: 5
-- **Errors**: 2
-- **Run Time**: 1.00s
+- **File**: test-output-20.txt
+- **Total Tests**: 73
+- **Passed**: 45 (61.6%)
+- **Failed**: 25 (34.2%)
+- **Warnings**: 3
+- **Errors**: 0
+- **Run Time**: 2.22s
 
-### Error Tests
+### Failed Tests
 - [
-- [100%]
-- at
-- at
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- [
+- tests/test_api_routes.py::TestApiRoutes::test_api_users_get
+- tests/test_api_routes.py::TestApiRoutes::test_api_users_post
+- tests/test_api_routes.py::TestApiRoutes::test_api_users_delete
+- tests/test_api_routes.py::TestApiRoutes::test_api_groups_get
+- tests/test_api_routes.py::TestApiRoutes::test_api_stats
+- tests/test_api_routes.py::TestApiRoutes::test_api_test_connection
+- tests/test_authentication.py::TestAuthentication::test_protected_route_with_auth
+- tests/test_authentication.py::TestAuthentication::test_admin_required_routes
+- tests/test_authentication.py::TestAuthentication::test_password_reset_request
+- tests/test_authentication_auto.py::TestAuthentication::test_post__login
+- tests/test_authentication_no_rate_limits.py::TestAuthenticationNoRateLimits::test_login_page_loads
+- tests/test_authentication_no_rate_limits.py::TestAuthenticationNoRateLimits::test_valid_login
 - tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_disabled
-- tests/test_authentication_rate_limits.py::TestAuthenticationWithRateLimits::test_login_with_rate_limits_enabled
+- tests/test_authentication_updated.py::TestAuthenticationUpdated::test_login_page_loads
+- tests/test_authentication_updated.py::TestAuthenticationUpdated::test_valid_login
+- tests/test_authentication_updated.py::TestAuthenticationUpdated::test_invalid_login
+- tests/test_authentication_updated.py::TestAuthenticationUpdated::test_logout
+- tests/test_group_management.py::TestGroupManagement::test_add_group_form
+- tests/test_group_management.py::TestGroupManagement::test_group_membership
+- tests/test_group_management.py::TestGroupManagement::test_group_edit
+- tests/test_group_management.py::TestGroupManagement::test_group_delete
+- tests/test_page_routes.py::TestPageRoutes::test_login_page
+- tests/test_user_management.py::TestUserManagement::test_add_user_form
+- tests/test_user_management.py::TestUserManagement::test_user_edit
+- tests/test_user_management.py::TestUserManagement::test_user_delete
 
 ## Test Trend
 | Run | Total | Passed | Failed | Errors | Pass Rate |
 |-----|-------|--------|--------|--------|-----------|
-| 1 | 0 | 0 | 0 | 0 | 0.0% |
-| 2 | 6 | 0 | 0 | 0 | 0.0% |
-| 3 | 7 | 7 | 0 | 0 | 100.0% |
-| 4 | 56 | 38 | 18 | 0 | 67.9% |
-| 5 | 2 | 0 | 0 | 2 | 0.0% |
+| 1 | 71 | 45 | 23 | 0 | 63.4% |
+| 2 | 71 | 45 | 23 | 0 | 63.4% |
+| 3 | 2 | 2 | 0 | 0 | 100.0% |
+| 4 | 73 | 45 | 25 | 0 | 61.6% |
+| 5 | 73 | 45 | 25 | 0 | 61.6% |
 
 ## Test Categories
 ### Authentication
-- **Test Files**: 4
-- **Test Count**: 23
+- **Test Files**: 5
+- **Test Count**: 25
 - **Files**:
   - test_authentication_rate_limits.py (2 tests)
+  - test_authentication_no_rate_limits.py (2 tests)
   - test_authentication_auto.py (3 tests)
   - test_authentication.py (9 tests)
   - test_authentication_updated.py (9 tests)
@@ -78,8 +117,8 @@ Generated: 2025-08-19 19:09:33
 
 ## Recommendations
 
+1. **Fix failing tests**: Address the specific test failures listed above.
 2. **Address warnings**: Review and fix the warnings in the test output.
-3. **Fix test errors**: Some tests have setup or execution errors that need to be fixed.
 5. **Update tests for missing routes**: Some tests are failing because they're testing routes that don't exist yet.
 6. **Handle rate limiting**: Configure tests to handle or disable rate limiting during testing.
 7. **Improve test coverage**: Focus on testing the core functionality of your application.
