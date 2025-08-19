@@ -47,10 +47,10 @@ def generate_report(results):
     
     report.append("## Summary")
     report.append(f"- **Total Tests**: {total}")
-    report.append(f"- **Passed**: {passed} ({passed/total*100:.1f} if total > 0 else 0.0}%)")
-    report.append(f"- **Failed**: {failed} ({failed/total*100:.1f} if total > 0 else 0.0}%)")
-    report.append(f"- **Skipped**: {skipped} ({skipped/total*100:.1f} if total > 0 else 0.0}%)")
-    report.append(f"- **Error**: {error} ({error/total*100:.1f} if total > 0 else 0.0}%)")
+    report.append(f"- **Passed**: {passed} ({passed/total*100:.1f}% if total > 0 else 0.0}%)")
+    report.append(f"- **Failed**: {failed} ({failed/total*100:.1f}% if total > 0 else 0.0}%)")
+    report.append(f"- **Skipped**: {skipped} ({skipped/total*100:.1f}% if total > 0 else 0.0}%)")
+    report.append(f"- **Error**: {error} ({error/total*100:.1f}% if total > 0 else 0.0}%)")
     report.append("")
     
     # Results by category

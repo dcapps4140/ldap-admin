@@ -1,0 +1,22 @@
+<h1>Action Items</h1>
+<p>Generated: 2025-08-19 22:17:36</p>
+<h2>Missing Routes to Implement</h2>
+<p>| Route | Test | Reason |
+| ----- | ---- | ------ |
+| <code>/edit_user</code> | test_user_management.TestUserManagement.test_user_edit | Route returns 404 |
+| <code>/delete_user</code> | test_user_management.TestUserManagement.test_user_delete | Route returns 404 |
+| <code>/connection</code> | test_api_routes.TestApiRoutes.test_api_test_connection | Route returns 404 |
+| <code>/admin</code> | test_authentication.TestAuthentication.test_admin_required_routes | Route returns 404 |
+| <code>/group/membership</code> | test_group_management.TestGroupManagement.test_group_membership | Route returns 404 |
+| <code>/edit_group</code> | test_group_management.TestGroupManagement.test_group_edit | Route returns 404 |
+| <code>/delete_group</code> | test_group_management.TestGroupManagement.test_group_delete | Route returns 404 |
+| <code>/protected/route/with/auth</code> | test_authentication_updated.TestAuthenticationUpdated.test_protected_route_with_auth | Dashboard route doesn |
+| <code>/admin</code> | test_authentication_updated.TestAuthenticationUpdated.test_admin_required_routes | Admin route doesn |
+| <code>/password_reset</code> | test_authentication_updated.TestAuthenticationUpdated.test_password_reset_request | Password reset route doesn |</p>
+<h2>Missing Fixtures to Implement</h2>
+<p>| Test | Reason |
+| ---- | ------ |
+| test_authentication_rate_limits.TestAuthenticationWithRateLimits.test_login_with_rate_limits_disabled | Missing fixture |
+| test_authentication_rate_limits.TestAuthenticationWithRateLimits.test_login_with_rate_limits_enabled | Missing fixture |
+| test_authentication_no_rate_limits.TestAuthenticationNoRateLimits.test_login_page_loads | Missing fixture |
+| test_authentication_no_rate_limits.TestAuthenticationNoRateLimits.test_valid_login | Missing fixture |</p>

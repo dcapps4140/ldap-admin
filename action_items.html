@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Action Items</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        h1 { color: #2c3e50; }
+        h2 { color: #3498db; margin-top: 30px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        code { background-color: #f8f9fa; padding: 2px 4px; font-family: monospace; }
+    </style>
+</head>
+<body>
+<h1>Action Items</h1>
+<p>Generated: 2025-08-19 22:27:13</p>
+<h2>Missing Routes to Implement</h2>
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Test</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/edit_user</code></td>
+<td>test_user_management.TestUserManagement.test_user_edit</td>
+<td>Route returns 404</td>
+</tr>
+<tr>
+<td><code>/delete_user</code></td>
+<td>test_user_management.TestUserManagement.test_user_delete</td>
+<td>Route returns 404</td>
+</tr>
+<tr>
+<td><code>/connection</code></td>
+<td>test_api_routes.TestApiRoutes.test_api_test_connection</td>
+<td>Route returns 404</td>
+</tr>
+<tr>
+<td><code>/admin</code></td>
+<td>test_authentication.TestAuthentication.test_admin_required_routes</td>
+<td>Route returns 404</td>
+</tr>
+<tr>
+<td><code>/group/membership</code></td>
+<td>test_group_management.TestGroupManagement.test_group_membership</td>
+<td>Route returns 404</td>
+</tr>
+<tr>
+<td><code>/edit_group</code></td>
+<td>test_group_management.TestGroupManagement.test_group_edit</td>
+<td>Route returns 404</td>
+</tr>
+<tr>
+<td><code>/delete_group</code></td>
+<td>test_group_management.TestGroupManagement.test_group_delete</td>
+<td>Route returns 404</td>
+</tr>
+<tr>
+<td><code>/protected/route/with/auth</code></td>
+<td>test_authentication_updated.TestAuthenticationUpdated.test_protected_route_with_auth</td>
+<td>Dashboard route doesn</td>
+</tr>
+<tr>
+<td><code>/admin</code></td>
+<td>test_authentication_updated.TestAuthenticationUpdated.test_admin_required_routes</td>
+<td>Admin route doesn</td>
+</tr>
+<tr>
+<td><code>/password_reset</code></td>
+<td>test_authentication_updated.TestAuthenticationUpdated.test_password_reset_request</td>
+<td>Password reset route doesn</td>
+</tr>
+</tbody>
+</table>
+<h2>Missing Fixtures to Implement</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test_authentication_rate_limits.TestAuthenticationWithRateLimits.test_login_with_rate_limits_disabled</td>
+<td>Missing fixture</td>
+</tr>
+<tr>
+<td>test_authentication_rate_limits.TestAuthenticationWithRateLimits.test_login_with_rate_limits_enabled</td>
+<td>Missing fixture</td>
+</tr>
+<tr>
+<td>test_authentication_no_rate_limits.TestAuthenticationNoRateLimits.test_login_page_loads</td>
+<td>Missing fixture</td>
+</tr>
+<tr>
+<td>test_authentication_no_rate_limits.TestAuthenticationNoRateLimits.test_valid_login</td>
+<td>Missing fixture</td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
