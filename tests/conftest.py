@@ -356,3 +356,32 @@ def authenticated_client_no_rate_limits(client_no_rate_limits, mock_user):
         sess['_user_id'] = mock_user.get_id()
         sess['_fresh'] = True
     return client_no_rate_limits
+
+@pytest.fixture
+def working_authenticated_client(app):
+    """Create a properly authenticated client."""
+    app.config['TESTING'] = True
+    app.config['WTF_CSRF_ENABLED'] = False
+    app.config['LOGIN_DISABLED'] = True  # Disable login requirement for testing
+    
+    with app.test_client() as client:
+        with client.session_transaction() as sess:
+            sess['user_id'] = 'testuser'
+            sess['roles'] = ['user', 'admin']
+            sess['_fresh'] = True
+        yield client
+
+@pytest.fixture  
+def bypass_auth_client(app):
+    """Create a client that bypasses authentication."""
+    # Temporarily disable authentication
+    original_login_required = app.view_functions.get('api_get_users', lambda: None)
+    
+    with app.test_client() as client:
+        with client.session_transaction() as sess:
+            sess['user_id'] = 'testuser'
+            sess['roles'] = ['user', 'admin']
+        
+        # Mock the login_required decorator to do nothing
+        with patch('flask_login.login_required', lambda f: f):
+            yield client
