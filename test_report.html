@@ -25,13 +25,13 @@
 </head>
 <body>
     <h1>Test Report</h1>
-    <p>Generated: 2025-08-26 13:01:08</p>
+    <p>Generated: 2025-08-26 13:40:10</p>
     <h2>Summary</h2>
     <div class='summary'>
-        <p><strong>Total Tests:</strong> 71</p>
-        <p><strong>Passed:</strong> <span class='passed'>55</span> (77.5%)</p>
+        <p><strong>Total Tests:</strong> 77</p>
+        <p><strong>Passed:</strong> <span class='passed'>65</span> (84.4%)</p>
         <p><strong>Failed:</strong> <span class='failed'>0</span> (0.0%)</p>
-        <p><strong>Skipped:</strong> <span class='skipped'>16</span> (22.5%)</p>
+        <p><strong>Skipped:</strong> <span class='skipped'>12</span> (15.6%)</p>
         <p><strong>Error:</strong> <span class='error'>0</span> (0.0%)</p>
     </div>
     <h2>Results by Module</h2>
@@ -77,6 +77,24 @@
             <td>100.0%</td>
             <td>3</td>
             <td class='passed'>3</td>
+            <td class='failed'>0</td>
+            <td class='skipped'>0</td>
+            <td class='error'>0</td>
+        </tr>
+        <tr>
+            <td>test_authentication_no_rate_limits</td>
+            <td>100.0%</td>
+            <td>5</td>
+            <td class='passed'>5</td>
+            <td class='failed'>0</td>
+            <td class='skipped'>0</td>
+            <td class='error'>0</td>
+        </tr>
+        <tr>
+            <td>test_authentication_rate_limits</td>
+            <td>100.0%</td>
+            <td>5</td>
+            <td class='passed'>5</td>
             <td class='failed'>0</td>
             <td class='skipped'>0</td>
             <td class='error'>0</td>
@@ -171,24 +189,6 @@
             <td class='skipped'>0</td>
             <td class='error'>0</td>
         </tr>
-        <tr>
-            <td>test_authentication_no_rate_limits</td>
-            <td>0.0%</td>
-            <td>2</td>
-            <td class='passed'>0</td>
-            <td class='failed'>0</td>
-            <td class='skipped'>2</td>
-            <td class='error'>0</td>
-        </tr>
-        <tr>
-            <td>test_authentication_rate_limits</td>
-            <td>0.0%</td>
-            <td>2</td>
-            <td class='passed'>0</td>
-            <td class='failed'>0</td>
-            <td class='skipped'>2</td>
-            <td class='error'>0</td>
-        </tr>
     </table>
     <h2>Module Details</h2>
     <div class='module-section'>
@@ -234,6 +234,18 @@
     <div class='module-section'>
         <div class='module-header'>
             <h3>test_authentication_auto</h3>
+            <p>Pass Rate: 100.0%</p>
+        </div>
+    </div>
+    <div class='module-section'>
+        <div class='module-header'>
+            <h3>test_authentication_no_rate_limits</h3>
+            <p>Pass Rate: 100.0%</p>
+        </div>
+    </div>
+    <div class='module-section'>
+        <div class='module-header'>
+            <h3>test_authentication_rate_limits</h3>
             <p>Pass Rate: 100.0%</p>
         </div>
     </div>
@@ -358,48 +370,6 @@
             <p>Pass Rate: 100.0%</p>
         </div>
     </div>
-    <div class='module-section'>
-        <div class='module-header'>
-            <h3>test_authentication_no_rate_limits</h3>
-            <p>Pass Rate: 0.0%</p>
-        </div>
-        <h4>Skipped Tests</h4>
-        <table>
-            <tr>
-                <th>Test</th>
-                <th>Reason</th>
-            </tr>
-            <tr>
-                <td class='skipped'>test_login_page_loads</td>
-                <td class='reason'>Missing fixture</td>
-            </tr>
-            <tr>
-                <td class='skipped'>test_valid_login</td>
-                <td class='reason'>Missing fixture</td>
-            </tr>
-        </table>
-    </div>
-    <div class='module-section'>
-        <div class='module-header'>
-            <h3>test_authentication_rate_limits</h3>
-            <p>Pass Rate: 0.0%</p>
-        </div>
-        <h4>Skipped Tests</h4>
-        <table>
-            <tr>
-                <th>Test</th>
-                <th>Reason</th>
-            </tr>
-            <tr>
-                <td class='skipped'>test_login_with_rate_limits_disabled</td>
-                <td class='reason'>Missing fixture</td>
-            </tr>
-            <tr>
-                <td class='skipped'>test_login_with_rate_limits_enabled</td>
-                <td class='reason'>Missing fixture</td>
-            </tr>
-        </table>
-    </div>
     <h2>All Skipped Tests</h2>
     <table>
         <tr>
@@ -413,22 +383,6 @@
         <tr>
             <td class='skipped'>test_admin_required_routes</td>
             <td class='reason'>Route returns 404</td>
-        </tr>
-        <tr>
-            <td class='skipped'>test_login_page_loads</td>
-            <td class='reason'>Missing fixture</td>
-        </tr>
-        <tr>
-            <td class='skipped'>test_valid_login</td>
-            <td class='reason'>Missing fixture</td>
-        </tr>
-        <tr>
-            <td class='skipped'>test_login_with_rate_limits_disabled</td>
-            <td class='reason'>Missing fixture</td>
-        </tr>
-        <tr>
-            <td class='skipped'>test_login_with_rate_limits_enabled</td>
-            <td class='reason'>Missing fixture</td>
         </tr>
         <tr>
             <td class='skipped'>test_protected_route_with_auth</td>

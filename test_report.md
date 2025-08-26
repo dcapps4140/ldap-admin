@@ -1,11 +1,11 @@
 # Test Report
-Generated: 2025-08-26 13:01:08
+Generated: 2025-08-26 13:40:10
 
 ## Summary
-- **Total Tests**: 71
-- **Passed**: 55 (77.5%)
+- **Total Tests**: 77
+- **Passed**: 65 (84.4%)
 - **Failed**: 0 (0.0%)
-- **Skipped**: 16 (22.5%)
+- **Skipped**: 12 (15.6%)
 - **Error**: 0 (0.0%)
 
 ## Results by Module
@@ -37,6 +37,16 @@ Generated: 2025-08-26 13:01:08
 - **Pass Rate**: 100.0%
 - **Total Tests**: 3
 - **Passed**: 3
+
+### test_authentication_no_rate_limits
+- **Pass Rate**: 100.0%
+- **Total Tests**: 5
+- **Passed**: 5
+
+### test_authentication_rate_limits
+- **Pass Rate**: 100.0%
+- **Total Tests**: 5
+- **Passed**: 5
 
 ### test_authentication_updated
 - **Pass Rate**: 66.7%
@@ -107,33 +117,9 @@ Generated: 2025-08-26 13:01:08
 - **Total Tests**: 4
 - **Passed**: 4
 
-### test_authentication_no_rate_limits
-- **Pass Rate**: 0.0%
-- **Total Tests**: 2
-- **Passed**: 0
-- **Skipped**: 2
-
-#### Skipped Tests
-- **test_login_page_loads** - *Reason: Missing fixture*
-- **test_valid_login** - *Reason: Missing fixture*
-
-### test_authentication_rate_limits
-- **Pass Rate**: 0.0%
-- **Total Tests**: 2
-- **Passed**: 0
-- **Skipped**: 2
-
-#### Skipped Tests
-- **test_login_with_rate_limits_disabled** - *Reason: Missing fixture*
-- **test_login_with_rate_limits_enabled** - *Reason: Missing fixture*
-
 ## Skipped Tests
 - **test_api_test_connection** - *Reason: Route returns 404*
 - **test_admin_required_routes** - *Reason: Route returns 404*
-- **test_login_page_loads** - *Reason: Missing fixture*
-- **test_valid_login** - *Reason: Missing fixture*
-- **test_login_with_rate_limits_disabled** - *Reason: Missing fixture*
-- **test_login_with_rate_limits_enabled** - *Reason: Missing fixture*
 - **test_protected_route_with_auth** - *Reason: Dashboard route doesn*
 - **test_admin_required_routes** - *Reason: Admin route doesn*
 - **test_password_reset_request** - *Reason: Password reset route doesn*

@@ -17,7 +17,7 @@ def test_client_creation(client):
 def test_sample_data(sample_user_data, sample_group_data):
     """Test that sample data fixtures work."""
     assert sample_user_data['username'] == 'sampleuser'
-    assert sample_group_data['name'] == 'testgroup'
+    assert sample_group_data['name'] == 'samplegroup'
 
 def test_mock_ldap(mock_ldap_connection):
     """Test that LDAP mocking works."""
