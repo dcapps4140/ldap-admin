@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>Certificate Management for {{ username }}</h1>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Enrollment Package</h3>
+                </div>
+                <div class="card-body">
+                    <p>Enrollment packages allow users to request their own certificates using their LDAP credentials.</p>
+                    
+                    {% if has_enrollment %}
+                        <a href="{{ url_for('download_enrollment', username=username) }}" class="btn btn-primary">
+                            <i class="fas fa-download"></i> Download Enrollment Package
+                        </a>
+                        <div class="mt-2">
+                            <form method="post" action="{{ url_for('email_enrollment', username=username) }}">
+                                <button type="submit" class="btn btn-info">
+                                    <i class="fas fa-envelope"></i> Email Enrollment Package
+                                </button>
+                            </form>
+                        </div>
+                    {% else %}
+                        <form method="post">
+                            <input type="hidden" name="action" value="generate_enrollment">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Generate Enrollment Package
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Client Certificate</h3>
+                </div>
+                <div class="card-body">
+                    <p>Client certificates allow direct access to TAK Server without enrollment.</p>
+                    
+                    {% if has_certificate %}
+                        <a href="{{ url_for('download_certificate', username=username) }}" class="btn btn-primary">
+                            <i class="fas fa-download"></i> Download Certificate
+                        </a>
+                        <p class="mt-2"><small>Certificate password: atakatak</small></p>
+                    {% else %}
+                        <form method="post">
+                            <input type="hidden" name="action" value="create_certificate">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Create Certificate
+                            </button>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-4">
+        <a href="{{ url_for('user_detail', username=username) }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to User Details
+        </a>
+    </div>
+</div>
+{% endblock %}
