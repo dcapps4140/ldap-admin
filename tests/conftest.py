@@ -324,3 +324,35 @@ def clean_session(client):
     with client.session_transaction() as sess:
         sess.clear()
     return client
+
+# MISSING FIXTURES - Add these to the end of conftest.py
+
+@pytest.fixture
+def sample_user_data():
+    """Sample user data for testing."""
+    return {
+        'username': 'sampleuser',
+        'first_name': 'Sample',
+        'last_name': 'User',
+        'email': 'sampleuser@example.com',
+        'password': 'samplepassword123',
+        'department': 'IT',
+        'title': 'Developer'
+    }
+
+@pytest.fixture
+def sample_group_data():
+    """Sample group data for testing."""
+    return {
+        'name': 'samplegroup',
+        'description': 'Sample group for testing',
+        'members': ['sampleuser', 'testuser']
+    }
+
+@pytest.fixture
+def authenticated_client_no_rate_limits(client_no_rate_limits, mock_user):
+    """Authenticated client with rate limiting disabled."""
+    with client_no_rate_limits.session_transaction() as sess:
+        sess['_user_id'] = mock_user.get_id()
+        sess['_fresh'] = True
+    return client_no_rate_limits
